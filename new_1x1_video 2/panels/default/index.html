@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"/>
+		<title>Interstitial</title>
+		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+		<link rel="stylesheet" href="../../styles/reset.css"/> 
+		<link rel="stylesheet" href="styles/style.css"/>
+		<script type="text/javascript">EBModulesToLoad = ['Video','EBAPI','EBCMD'];</script>
+		<script type="text/javascript" src="http://ds.serving-sys.com/BurstingScript/adKit/adkit.js"></script>
+		<script type="text/javascript" src="../../scripts/localPreview.js"></script><!-- COMMENT OUT LOCAL PREVIEW INCLUDE WHEN RELEASING AD -->
+		<script type="text/javascript" src="scripts/script.js"></script>
+		<script>if(0)EB.initExpansionParams(0,0,1,1);</script><!-- SE -->
+		<script>if(0)EB.initPanelDimensions(1,1);</script><!-- EB -->
+	</head>
+	<body> 
+		<div id="adContainer" class="centered">
+			<div id="formatLabel">Interstitial<span id="dimensions"></span></div>
+			<div id="videoContainer" class="centered">
+					<video id="video" controls muted poster="images/poster.jpg">
+						<source src="videos/video.mp4" type="video/mp4">
+					</video>
+			</div>
+		</div>
+		<button id="closeButton" class="close_button">X</button>
+	</body> 
+</html>
