@@ -125,29 +125,7 @@ function addEventListeners() {
 		EB.clickthrough();
 	});
 
-	//Reiniel
-	
-	// var bgClks = document.getElementsByClassName("genClk");
-    // for(var i=0; i<bgClks.length; i++){
-    //     bgClks[i].addEventListener("click", onBgClk, false);
-    // }
-	// video.addEventListener("play", onVideoPlay, false);
-    // video.addEventListener("pause", onVideoPause, false);
-    // video.addEventListener("click", function(){
-    //     video.pause();
-    //     EB.clickthrough();
-    // });
 
-    // var playBtns = document.getElementsByClassName("playBtn");
-    // for(var i=0; i<playBtns.length; i++){
-    //     playBtns[i].addEventListener("click", onVideoPlayClk, false);
-    // }
-
-    // var pauseBtns = document.getElementsByClassName("pauseBtn");
-    // for(var i=0; i<pauseBtns.length; i++){
-    //     pauseBtns[i].addEventListener("click", onVideoPauseClk, false);
-    // }
-	//Ravelo
 
 	closeButton.addEventListener("click", handleCloseButtonClick);
 	userActionButton.addEventListener("click", handleUserActionButtonClick);
@@ -183,23 +161,6 @@ function creativeContainerReady() {
 EVENT HANDLERS
 *******************/
 
-//REINIEL
-
-// function onBgClk(e) {
-// //   pauseVideo();
-//   EB.clickthrough('Background_Click');
-// }
-
-// function onVideoPlayClk(e) {
-//   video.play();
-// }
-
-// function onVideoPauseClk(e) {
-//   video.pause();
-// }
-
-
-//RAVELO
 
 function handleCloseButtonClick(event) {
 	pauseVideo();
@@ -220,12 +181,6 @@ function handleClickthroughButtonClick() {
 	pauseVideo();
 	EB.clickthrough();
 }
-
-
-
-
-
-
 
 
 /*******************
@@ -387,4 +342,376 @@ End HTML5 Event System - Do Not Modify
 window.addEventListener("load", checkIfAdKitReady);
 
 
+//NEW CODE
 
+(function() {
+
+	"use strict";
+
+//Variable Declaration
+	var uid;
+	var	container,
+	closeButtonLandscape,
+	closePortrait,
+	frontclose,
+	closeLightbox,
+	hotspot,
+	panel,
+	panelCreative,
+	headerSection,
+	panelContainer,
+	creativeHotspot,
+	clicktThrough,
+	playButton,
+	panelContainerRatio,
+	panelCurrentDimension,
+	elemToResizeOnOrientation,
+	screenOrientation,
+	lightbox,
+	animationEndEvent,
+	isAutoExpand = false,
+	closeContainer,
+	videoContainer,
+	video,
+	originalVideoWidth = 480,
+	originalVideoHeight = 270,
+	logoContainer,
+	timercheck = false,
+	isAutoCollapse = true;
+
+function initializeGlobalVariables()
+	{
+   
+    playButton 	= document.getElementById('video-play-button');
+
+	};
+
+function trackVideoInteractions(video)
+	{
+		var videoTrackingModule = new EBG.VideoModule(video);
+	}
+
+function togglePlayAndPoster(_show)
+	{
+		if(_show)
+		{
+			playButton.style.display = 'block';
+		}else{
+			playButton.style.display = 'none';
+		}
+	}
+
+//FOR TIMER
+
+  function checktime(event){
+  var timestamp = video.duration - video.currentTime;
+  var timetext = timestamp.toString();
+  if(timetext>=10){
+   timetext = timetext.substring(0,2);
+   document.getElementById("timer").innerHTML = "00:"+timetext;
+  }
+  else{
+   timetext = timetext.substring(0,1);
+   document.getElementById("timer").innerHTML = "00:0"+timetext;
+  }
+  //timetext = timetext.split('.').join(':');
+  //console.log(timestamp)
+  if(timestamp<=0){
+   isAutoCollapse = false;
+   collapse();
+  }
+ }
+//END TIMER
+
+function initVideoListener()
+	{
+		if(playButton)
+		{
+			playButton.addEventListener('click',onPlayClick);
+		}
+
+		video.addEventListener("play", onVideoPlay);
+		video.addEventListener("ended", onVideoEnd);
+		video.addEventListener('timeupdate', videoTimeUpdateHandler, false);
+		document.getElementById("Play").addEventListener("click", Playbutton);
+		document.getElementById("Pause").addEventListener("click", Pausebutton);
+		document.getElementById("SoundOn").addEventListener("click", Soundoffbutton);
+		document.getElementById("SoundOff").addEventListener("click", Soundonbutton);
+		document.getElementById("Replay").addEventListener("click", Replaybutton);
+
+		videofirstunmute();
+	  function videofirstunmute() {
+      video.addEventListener('volumechange', volume);
+      var i = 0;
+			function volume() {
+				i++;
+				console.log(i);
+				if (i == 2) {
+					console.log("PlayFromStart");
+					video.currentTime = 0;
+					video.play();
+					video.muted = false;
+					Soundonbutton();
+				}
+          }
+	  }
+	}
+
+
+	function showcontrols() {
+        document.getElementById("controls").style.display =("block");
+    }
+	function hidecontrols() {
+        document.getElementById("controls").style.display =("none");
+    }
+	function Playbutton() {
+        console.log("Paused")
+        video.play();
+    }
+	function Playbutton() {
+        console.log("Paused")
+        video.play();
+    }
+    function Pausebutton() {
+        console.log("Playing")
+        video.pause();
+    }
+    function Soundonbutton() {
+        console.log("SoundOn")
+        video.muted = false;
+    }
+    function Soundoffbutton() {
+        console.log("SoundOff")
+        video.muted = true;
+    }
+    function Replaybutton(){
+
+		console.log("replay")
+	  	document.getElementById("controls").style.display =("block");
+		document.getElementById("Replay").style.display =("none");
+		video.currentTime = 0;
+		video.play();
+		video.muted = false;
+}
+
+function videoTimeUpdateHandler(e)
+    {
+        //video.setAttribute("controls","controls");
+
+		if (video.muted == true) {
+
+			document.getElementById("SoundOn").style.display = ("none");
+			document.getElementById("SoundOff").style.display = ("block");
+		}
+		if (video.muted == false) {
+			document.getElementById("SoundOff").style.display = ("none");
+			document.getElementById("SoundOn").style.display = ("block");
+		}
+
+		if (video.paused == true) {
+			document.getElementById("Pause").style.display = ("none");
+			document.getElementById("Play").style.display = ("block");
+		}
+		if (video.paused == false) {
+			document.getElementById("Play").style.display = ("none");
+			document.getElementById("Pause").style.display = ("block");
+		}
+
+    }
+
+		function onVideoPlay(evt)
+	{
+		togglePlayAndPoster(false);
+		if(Utils.isMobile.iOS())
+		{
+			showVideo();
+		}
+	}
+
+	function onVideoEnd()
+	{
+		try{
+			video.pause();
+			video.currentTime = 0.1;
+		}catch(err){}
+
+		if(Utils.isMobile.iOS())
+		{
+			hideVideo();
+		}
+		togglePlayAndPoster(true);
+
+
+	console.log("VideoEnd");
+	document.getElementById("Replay").style.display =("block");
+	document.getElementById("controls").style.display =("none");
+}
+function removeVideoListener()
+	{
+		if(playButton)
+		{
+			playButton.removeEventListener('click',onPlayClick);
+		}
+	}
+
+	function onPlayClick()
+	{
+		video.removeEventListener("play", onVideoPlay);
+		video.removeEventListener("ended", onVideoEnd);
+		// EB.userActionCounter('Video_OverlayPlay_Clicked');
+		if(Utils.isMobile.iOS())
+		{
+			showVideo();
+		}
+		video.style.opacity = 0.2;
+		togglePlayAndPoster(false);
+		playVideo();
+		unMuteVideo();
+		setTimeout(function(){
+			video.style.opacity = 1;
+			video.addEventListener("play", onVideoPlay);
+			video.addEventListener("ended", onVideoEnd);
+		},100)
+
+	}
+
+	function autoPlayVideo()
+	{
+		//Fix to display video controls correctly when panel expand animation complete and video autoplay
+		if(Utils.isBrowser.FireFox())
+		{
+			var originalWidth = video.style.width;
+			video.style.width = '99.99%';
+			setTimeout(function(){
+				video.style.width = originalWidth;
+			},10);
+		}
+
+		if(!Utils.isMobile.any())
+		{
+			playVideo();
+			//muteVideo();
+		}else{
+			if(Utils.isMobile.iOS())
+			{
+				hideVideo();
+			}
+			togglePlayAndPoster(true);
+		}
+	}
+
+	function playVideo()
+	{
+		togglePlayAndPoster(false);
+		try{
+			video.play();
+		}catch(err){}
+	}
+
+	function showVideo(){ video.style.display = 'block'; }
+
+	function hideVideo(){ video.style.display = 'none';  }
+
+	function muteVideo(){ video.muted = true; }
+
+	function unMuteVideo(){	video.muted = false; }
+
+	function pauseVideos()
+	{
+		togglePlayAndPoster(true);
+		try{
+			video.pause();
+			if(Utils.isMobile.iOS())
+			{
+				hideVideo();
+			}
+		}catch(err){}
+	}
+
+	function hideVideoControls(){
+		video.removeAttribute("controls");
+	}
+
+
+	/*
+		Update element class name when Ad goes to portrat or landscape mode.
+		It use element ID and append landscape or portrait to create class name.
+		For example : If you want to make Gallery that occupy full width in portrait
+		and occupy few percentage lets say 40% in landscape then you need to create
+		Two class name with gallery id + Mode. So two class name will be create as
+		gallery_lanscape and gallery_portrait and applyed to gallery container whenever
+		respective mode is displayed.
+		This will help you to style each element depending or the portrait or landscape mode.
+	*/
+	function updateElemClass()
+	{
+		for (var i = 0; i < elemToResizeOnOrientation.length; i++)
+		{
+			var elem = elemToResizeOnOrientation[i].elemRef;
+			if(screenOrientation=="portrait")
+			{
+				Utils.removeClass(elem,elem.id+'-'+"landscape");
+			}else{
+				Utils.removeClass(elem,elem.id+'-'+"portrait");
+			}
+			Utils.setClass(elem,elem.id+'-'+screenOrientation);
+		};
+	}
+
+	function getuid()
+	{
+		if (EB._isLocalMode) {	return null;
+		} else {				return EB._adConfig.uid;
+		}
+	}
+
+	function onMessageReceived(event)
+	{
+		var msg;
+		if (typeof event == "object" && event.data) {
+			try{
+				msg = JSON.parse(event.data);
+			}catch(e){
+				return;
+			}
+		}
+		else {
+			// this is safe frame.
+			msg = {
+				type: event.type,
+				data: event
+			};
+		}
+		if (msg.type && msg.data && (!uid || (msg.data.uid && msg.data.uid == uid))) {
+			switch (msg.type) {
+				case "resize":
+					//panel resize;
+				break;
+			}
+		}
+	}
+
+	function setCustomVar(customVarName, defaultValue, parseNum) {	//create global var with name = str, taking value from adConfig if it's there, else use default
+		var value = defaultValue;
+		if(!EB._isLocalMode){
+			var value = EB._adConfig.hasOwnProperty(customVarName) ? EB._adConfig[customVarName] : defaultValue;
+		}
+		if (value === "true") value = true; //PENDING if we really need this check
+		if (value === "false") value = false; //PENDING if we really need this check
+		if (value === "undefined") value = undefined;
+		if (arguments.length == 3 && parseNum && typeof value === "string") value = parseFloat(value);
+		window[customVarName] = value;
+	}
+
+	function postMessageToParent(message){
+		window.parent.postMessage(JSON.stringify(message), "*");
+	}
+
+	function registerAction(){		//this func is never called, it's parsed by the ad platform on upload of the ad
+
+	}
+
+
+	
+
+}());
