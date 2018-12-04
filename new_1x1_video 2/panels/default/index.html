@@ -18,10 +18,42 @@
 		<div id="adContainer" class="centered">
 			<div id="formatLabel">Interstitial<span id="dimensions"></span></div>
 			<div id="videoContainer" class="centered">
-					<video id="video" controls muted poster="images/poster.jpg">
+		
+					
+					<video id="video" autoplay muted poster="images/poster.jpg">
 						<source src="videos/video.mp4" type="video/mp4">
 					</video>
-			</div>
+			       </div>
+
+			<!--code for contoles -->
+			
+				<div id="hotspot"></div>
+							<div id="Ctrlbar">
+								<div id="controls">
+									<div id="Play"> </div>
+									<div id="Pause"> 	</div>
+									<div id="SoundOff"> </div>
+									<div id="SoundOn"> 	</div>
+									<script>
+										var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+										var soundOn  = document.getElementById("SoundOn");
+										var soundOff  = document.getElementById("SoundOff");
+										if(iOS == true){
+											soundOn.style.visibility = "hidden";
+											soundOff.style.visibility = "hidden";
+										}
+										//alert(iOS);
+									</script>
+
+		                        </div>
+		                        <div id="countdown">Video will end in <span id="timer">00:00</span></div>
+		                    </div>
+							<div id="Replay"></div>
+							<div id='logo-container' class="logo-container-landscape"></div>
+							<div id="advertisement">ADVERTISEMENT</div>
+		
+		<!--end of code for controles-->	
+			
 		</div>
 		<button id="closeButton" class="close_button">X</button>
 	</body> 

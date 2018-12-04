@@ -125,6 +125,30 @@ function addEventListeners() {
 		EB.clickthrough();
 	});
 
+	//Reiniel
+	
+	// var bgClks = document.getElementsByClassName("genClk");
+    // for(var i=0; i<bgClks.length; i++){
+    //     bgClks[i].addEventListener("click", onBgClk, false);
+    // }
+	// video.addEventListener("play", onVideoPlay, false);
+    // video.addEventListener("pause", onVideoPause, false);
+    // video.addEventListener("click", function(){
+    //     video.pause();
+    //     EB.clickthrough();
+    // });
+
+    // var playBtns = document.getElementsByClassName("playBtn");
+    // for(var i=0; i<playBtns.length; i++){
+    //     playBtns[i].addEventListener("click", onVideoPlayClk, false);
+    // }
+
+    // var pauseBtns = document.getElementsByClassName("pauseBtn");
+    // for(var i=0; i<pauseBtns.length; i++){
+    //     pauseBtns[i].addEventListener("click", onVideoPauseClk, false);
+    // }
+	//Ravelo
+
 	closeButton.addEventListener("click", handleCloseButtonClick);
 	userActionButton.addEventListener("click", handleUserActionButtonClick);
 	clickthroughButton.addEventListener("click", handleClickthroughButtonClick);
@@ -153,9 +177,30 @@ function creativeContainerReady() {
 	startCollapseTimer();
 }
 
+
+
 /*******************
 EVENT HANDLERS
 *******************/
+
+//REINIEL
+
+// function onBgClk(e) {
+// //   pauseVideo();
+//   EB.clickthrough('Background_Click');
+// }
+
+// function onVideoPlayClk(e) {
+//   video.play();
+// }
+
+// function onVideoPauseClk(e) {
+//   video.pause();
+// }
+
+
+//RAVELO
+
 function handleCloseButtonClick(event) {
 	pauseVideo();
 	setTimeout(function(){
@@ -175,6 +220,13 @@ function handleClickthroughButtonClick() {
 	pauseVideo();
 	EB.clickthrough();
 }
+
+
+
+
+
+
+
 
 /*******************
 UTILITIES
@@ -333,3 +385,6 @@ End HTML5 Event System - Do Not Modify
 *************************************/
 
 window.addEventListener("load", checkIfAdKitReady);
+
+
+
