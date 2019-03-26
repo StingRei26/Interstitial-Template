@@ -113,7 +113,7 @@ video
 
 
 #Ctrlbar{
-display: block;
+display: none;
 position:absolute;
 background-color:rgba(0,0,0,.4);
 height:46px;
@@ -131,7 +131,7 @@ transition: all 500ms ease-in-out;
 
 #panel-container:hover #Ctrlbar{ 
 	bottom:0;
-	/*display:block; 	*/
+	display:block; 	
 	}
 
 /************
